@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "D3772A6F0D6880EB46F4192E59081C2CBD66A3FF",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "04101981B66E318109934C9516F88D824BB96459" : 9223372036854775807,
+    "D3772A6F0D6880EB46F4192E59081C2CBD66A3FF" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3CED2DCC-3994-49EA-A03F-35DA3C0BED69",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "04101981B66E318109934C9516F88D824BB96459" : "DatabaseExample\/DatabaseExample\/fmdb\/",
+    "D3772A6F0D6880EB46F4192E59081C2CBD66A3FF" : "DatabaseExample\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "DatabaseExample",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "DatabaseExample.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ccgus\/fmdb.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "04101981B66E318109934C9516F88D824BB96459"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/rgordonatrsgc\/DatabaseExample.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D3772A6F0D6880EB46F4192E59081C2CBD66A3FF"
+    }
+  ]
+}
