@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var address: UITextField!
     @IBOutlet weak var phone: UITextField!
@@ -32,25 +32,46 @@ class ViewController: UIViewController {
         if !fileManager.fileExists(atPath: databasePath as String) {
             
             // Create the database
-            let contactDB = FMDatabase(path: databasePath as String)
-            
-            // Check that this worked
-            if contactDB == nil {
-                print("Error: Could not create DB, details: \(contactDB?.lastErrorMessage())")
+            if let contactDB = FMDatabase(path: databasePath as String) {
+                
+                // Try to open the empty database and create the table structure required
+                if contactDB.open() {
+                    
+                    // Define the SQL statement to be run
+                    let SQL = "CREATE TABLE IF NOT EXISTS CONTACTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, ADDRESS TEXT, PHONE TEXT)"
+                    
+                    // Attempt to run the SQL statement
+                    if !contactDB.executeStatements(SQL) {
+                        print("Error: \(contactDB.lastErrorMessage())")
+                    }
+                    
+                    // Close the database connection
+                    contactDB.close()
+                    
+                } else {
+                    
+                    // We couldn't open the database, so throw an error
+                    print("Error: \(contactDB.lastErrorMessage())")
+                    
+                }
+                
             }
             
+        } else {
+            print("Error: Could not create DB.")
         }
         
-        
     }
-
+    
     
     @IBAction func saveData(_ sender: Any) {
+        
+
+        
     }
-    
     
     @IBAction func findContact(_ sender: Any) {
     }
-
+    
 }
 
