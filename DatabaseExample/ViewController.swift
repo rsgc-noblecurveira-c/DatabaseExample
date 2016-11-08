@@ -10,6 +10,11 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var name: UITextField!
+    @IBOutlet weak var address: UITextField!
+    @IBOutlet weak var phone: UITextField!
+    @IBOutlet weak var status: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
