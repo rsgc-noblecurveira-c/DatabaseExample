@@ -66,7 +66,53 @@ class ViewController: UIViewController {
     
     @IBAction func saveData(_ sender: Any) {
         
-
+        // Establish path to database through FMDatabase wrapper
+        if let contactDB = FMDatabase(path: databasePath as String) {
+            
+            // We know database should exist now (since viewDidLoad runs at startup)
+            // Now, open the database and insert data from the view (the user interface)
+            if contactDB.open() {
+                
+                // Get data from the form fields on the view (user interface)
+                guard let nameValue : String = name.text else {
+                    status.text = "Hey, we need a name here."
+                    return
+                }
+                guard let addressValue : String = address.text else {
+                    status.text = "Hey, we need an address!"
+                    return
+                }
+                guard let phoneValue : String = phone.text else {
+                    status.text = "Please provide a phone number."
+                    return
+                }
+                
+                // Create SQL statement to insert data
+                let SQL = "INSERT INTO CONTACTS (name, address, phone) VALUES ('\(nameValue)', '\(addressValue)', '\(phoneValue)')"
+                
+                // Try to run the statement
+                let result = contactDB.executeUpdate(SQL, withArgumentsIn: nil)
+                
+                // See what happened and react accordingly
+                if !result {
+                    status.text = "Failed to add contact"
+                } else {
+                    status.text = "Contact added"
+                    
+                    // Clear out the form fields
+                    name.text = ""
+                    address.text = ""
+                    phone.text = ""
+                }
+                
+            }
+            
+        } else {
+            
+            // We couldn't open the database, so throw an error
+            print("Error: Could not save data to database.")
+            
+        }
         
     }
     
