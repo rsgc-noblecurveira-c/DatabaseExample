@@ -117,6 +117,73 @@ class ViewController: UIViewController {
     }
     
     @IBAction func findContact(_ sender: Any) {
+        
+        // Establish path to database through FMDatabase wrapper
+        if let contactDB = FMDatabase(path: databasePath as String) {
+            
+            // We know database should exist now (since viewDidLoad runs at startup)
+            // Now, open the database and insert data from the view (the user interface)
+            if contactDB.open() {
+                
+                // Get form field value
+                guard let nameValue : String = name.text else {
+                    status.text = "Please provide a name."
+                    return
+                }
+                
+                // Create SQL statement to find data
+                let SQL = "SELECT address, phone FROM CONTACTS WHERE name = '\(nameValue)'"
+                
+                // Run query
+                do {
+                    
+                    // Try to run the query
+                    let results : FMResultSet? = try contactDB.executeQuery(SQL, values: nil)
+                    
+                    // We know database should exist now (since viewDidLoad runs at startup)
+                    // Now, open the database and select data using value given for name in the view (user interface)
+                    if results?.next() == true {    // Something was found for this query
+                        
+                        guard let addressValue : String = results?.string(forColumn: "address") else {
+                            print("Nil value returned from query for the address, that's odd.")
+                            return
+                        }
+                        guard let phoneValue : String = results?.string(forColumn: "phone") else {
+                            print("Nil value returned from query for the phone number, that's odd.")
+                            return
+                        }
+                        
+                        // Load the results in the view (user interface)
+                        address.text = addressValue
+                        phone.text = phoneValue
+                        status.text = "Record found!"
+                        
+                    } else {
+                        
+                        // Nothing was found for this query
+                        status.text = "Record not found"
+                        address.text = ""
+                        phone.text = ""
+                    }
+                    
+                    // Close the database
+                    contactDB.close()
+                    
+                } catch {
+                    
+                    // Query did not run, so report an error
+                    print("Error: \(contactDB.lastErrorMessage())")
+                }
+                
+            }
+            
+        } else {
+            
+            // Database could not be opened, report an error
+            print("Error: Database could not be opened.")
+            
+        }
+        
     }
     
 }
