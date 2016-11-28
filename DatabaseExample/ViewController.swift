@@ -188,10 +188,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
-    // MARK: UITextFieldDelegate
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        print(name.text)
+    @IBAction func AsYouType(_ sender: UITextField) {
+        findContact(self)
     }
+    // MARK: UITextFieldDelegate
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        print(name.text)
+//    }
     
 }
 
