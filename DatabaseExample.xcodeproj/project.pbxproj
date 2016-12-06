@@ -114,8 +114,8 @@
 				810111431DD21386007D39AC /* FMResultSet.m */,
 				810110D31DD207B0007D39AC /* AppDelegate.swift */,
 				810110D51DD207B0007D39AC /* ViewController.swift */,
-				810110DA1DD207B0007D39AC /* Assets.xcassets */,
 				810110D71DD207B0007D39AC /* Main.storyboard */,
+				810110DA1DD207B0007D39AC /* Assets.xcassets */,
 				810110DC1DD207B0007D39AC /* LaunchScreen.storyboard */,
 				810110DF1DD207B0007D39AC /* Info.plist */,
 				810110F81DD20CA6007D39AC /* DatabaseExample-Bridging-Header.h */,
@@ -191,7 +191,7 @@
 				TargetAttributes = {
 					810110CF1DD207B0007D39AC = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = U2ZN2W2UQJ;
+						DevelopmentTeam = HP97729ELQ;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -335,10 +335,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos10.0;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -379,9 +379,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos10.0;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -393,9 +393,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = U2ZN2W2UQJ;
+				DEVELOPMENT_TEAM = HP97729ELQ;
 				INFOPLIST_FILE = DatabaseExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.on.rsgc.DatabaseExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -410,9 +409,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = U2ZN2W2UQJ;
+				DEVELOPMENT_TEAM = HP97729ELQ;
 				INFOPLIST_FILE = DatabaseExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.on.rsgc.DatabaseExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -428,7 +426,6 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = U2ZN2W2UQJ;
 				INFOPLIST_FILE = DatabaseExampleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.on.rsgc.DatabaseExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -444,7 +441,6 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = U2ZN2W2UQJ;
 				INFOPLIST_FILE = DatabaseExampleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.on.rsgc.DatabaseExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
