@@ -41,7 +41,7 @@ class ViewController: UIViewController {
     
     // Object to store results retreived from DB
     var results : FMResultSet?
-
+    
     // Will save path to database file
     var databasePath = NSString()
     
@@ -170,7 +170,7 @@ class ViewController: UIViewController {
                     if results?.next() == true {    // Something was found for this query
                         
                         displayResult()
-
+                        
                     } else {
                         
                         // Nothing was found for this query
@@ -208,7 +208,7 @@ class ViewController: UIViewController {
             } else {
                 findContact(sender)
             }
-        }        
+        }
         
     }
     
@@ -219,13 +219,19 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showNextResult(_ sender: Any) {
+        
         contactArrayIndex += 1
         displayResult()
+        if (contactArrayIndex != 0)
+        {
+        buttonPrior.isEnabled = true
+        }
     }
     
     @IBAction func showPreviousResult(_ sender: UIButton) {
-        contactArrayIndex -= 1
-        displayPreviousResult()
+            contactArrayIndex -= 1
+            displayPreviousResult()
+            buttonNext.isEnabled = true
     }
     
     func displayPreviousResult() {
@@ -237,8 +243,10 @@ class ViewController: UIViewController {
             textFieldPhone.text = contactArray[contactArrayIndex].phone
             labelStatus.text = "Record found!"
         }
-        
-        buttonPrior.isEnabled = contactArray.count > 0
+        if (contactArrayIndex == 0)
+        {
+            buttonPrior.isEnabled = false
+        }
     }
     
     func displayResult() {
@@ -273,14 +281,21 @@ class ViewController: UIViewController {
                 }
             } else {
                 buttonNext.isEnabled = false
-                
                 // Close the database
                 if contactDB?.close() == true {
                     print("DB closed")
                 }
-
             }
-
+            
+        } else {
+            textFieldName.text = contactArray[contactArrayIndex].name
+            textFieldAddress.text = contactArray[contactArrayIndex].address
+            textFieldPhone.text = contactArray[contactArrayIndex].phone
+            labelStatus.text = "Record found!"
+            if (contactArrayIndex == contactArray.count)
+            {
+                buttonNext.isEnabled = false
+            }
         }
         
         print("Another row?")
