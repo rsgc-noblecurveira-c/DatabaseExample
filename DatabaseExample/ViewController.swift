@@ -8,13 +8,40 @@
 
 import UIKit
 
+struct Contact {
+    var name: String
+    var address: String
+    var phone: String
+    
+    init(name: String, address: String, phone: String) {
+        self.name = name
+        self.address = address
+        self.phone = phone
+    }
+}
+
 class ViewController: UIViewController {
     
-    @IBOutlet weak var name: UITextField!
-    @IBOutlet weak var address: UITextField!
-    @IBOutlet weak var phone: UITextField!
-    @IBOutlet weak var status: UILabel!
+    @IBOutlet weak var textFieldSearch: UITextField!
+    @IBOutlet weak var textFieldName: UITextField!
+    @IBOutlet weak var textFieldAddress: UITextField!
+    @IBOutlet weak var textFieldPhone: UITextField!
+    @IBOutlet weak var labelStatus: UILabel!
+    @IBOutlet weak var labelName: UILabel!
+    @IBOutlet weak var labelAddress: UILabel!
+    @IBOutlet weak var labelPhone: UILabel!
+    @IBOutlet weak var buttonNext: UIButton!
+    @IBOutlet weak var buttonPrior: UIButton!
     
+    var contactArray = [Contact]()
+    var contactArrayIndex = 0
+    
+    // Object to store reference to DB
+    var contactDB : FMDatabase?
+    
+    // Object to store results retreived from DB
+    var results : FMResultSet?
+
     // Will save path to database file
     var databasePath = NSString()
     
@@ -74,16 +101,16 @@ class ViewController: UIViewController {
             if contactDB.open() {
                 
                 // Get data from the form fields on the view (user interface)
-                guard let nameValue : String = name.text else {
-                    status.text = "Hey, we need a name here."
+                guard let nameValue : String = textFieldName.text else {
+                    labelStatus.text = "Hey, we need a name here."
                     return
                 }
-                guard let addressValue : String = address.text else {
-                    status.text = "Hey, we need an address!"
+                guard let addressValue : String = textFieldAddress.text else {
+                    labelStatus.text = "Hey, we need an address!"
                     return
                 }
-                guard let phoneValue : String = phone.text else {
-                    status.text = "Please provide a phone number."
+                guard let phoneValue : String = textFieldPhone.text else {
+                    labelStatus.text = "Please provide a phone number."
                     return
                 }
                 
@@ -95,14 +122,12 @@ class ViewController: UIViewController {
                 
                 // See what happened and react accordingly
                 if !result {
-                    status.text = "Failed to add contact"
+                    labelStatus.text = "Failed to add contact"
                 } else {
-                    status.text = "Contact added"
+                    labelStatus.text = "Contact added"
                     
                     // Clear out the form fields
-                    name.text = ""
-                    address.text = ""
-                    phone.text = ""
+                    resetFields()
                 }
                 
             }
@@ -126,48 +151,33 @@ class ViewController: UIViewController {
             if contactDB.open() {
                 
                 // Get form field value
-                guard let nameValue : String = name.text else {
-                    status.text = "Please provide a name."
+                guard let searchString : String = textFieldSearch.text else {
+                    labelStatus.text = "Please provide search data."
                     return
                 }
                 
                 // Create SQL statement to find data
-                let SQL = "SELECT address, phone FROM CONTACTS WHERE name = '\(nameValue)'"
+                let SQL = "SELECT name, address, phone FROM CONTACTS WHERE name LIKE '%\(searchString)%' OR address LIKE '%\(searchString)%' OR phone LIKE '%\(searchString)%'"
                 
                 // Run query
                 do {
                     
                     // Try to run the query
-                    let results : FMResultSet? = try contactDB.executeQuery(SQL, values: nil)
+                    results = try contactDB.executeQuery(SQL, values: nil)
                     
                     // We know database should exist now (since viewDidLoad runs at startup)
                     // Now, open the database and select data using value given for name in the view (user interface)
                     if results?.next() == true {    // Something was found for this query
                         
-                        guard let addressValue : String = results?.string(forColumn: "address") else {
-                            print("Nil value returned from query for the address, that's odd.")
-                            return
-                        }
-                        guard let phoneValue : String = results?.string(forColumn: "phone") else {
-                            print("Nil value returned from query for the phone number, that's odd.")
-                            return
-                        }
-                        
-                        // Load the results in the view (user interface)
-                        address.text = addressValue
-                        phone.text = phoneValue
-                        status.text = "Record found!"
-                        
+                        displayResult()
+
                     } else {
                         
                         // Nothing was found for this query
-                        status.text = "Record not found"
-                        address.text = ""
-                        phone.text = ""
+                        labelStatus.text = "Record not found"
+                        resetFields()
                     }
                     
-                    // Close the database
-                    contactDB.close()
                     
                 } catch {
                     
@@ -186,5 +196,99 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func findOnPartialSearchString(_ sender: Any) {
+        
+        // Invoke the findContact method.
+        if let searchString = textFieldSearch.text {
+            if searchString == "" {
+                resetFields()
+                labelStatus.text = ""
+                buttonNext.isEnabled = false
+                buttonPrior.isEnabled = false
+            } else {
+                findContact(sender)
+            }
+        }        
+        
+    }
+    
+    func resetFields() {
+        textFieldName.text = ""
+        textFieldAddress.text = ""
+        textFieldPhone.text = ""
+    }
+    
+    @IBAction func showNextResult(_ sender: Any) {
+        contactArrayIndex += 1
+        displayPreviousResult()
+        
+    }
+    
+    @IBAction func showPreviousResult(_ sender: UIButton) {
+        contactArrayIndex -= 1
+        displayPreviousResult()
+    }
+    
+    func displayPreviousResult() {
+        
+        if (contactArray.count > contactArrayIndex)
+        {
+            textFieldName.text = contactArray[contactArrayIndex].name
+            textFieldAddress.text = contactArray[contactArrayIndex].address
+            textFieldPhone.text = contactArray[contactArrayIndex].phone
+            labelStatus.text = "Record found!"
+        }
+        
+        buttonPrior.isEnabled = contactArray.count > 0
+    }
+    
+    func displayResult() {
+        
+        if results?.hasAnotherRow() == true {
+            
+            guard let nameValue : String = results?.string(forColumn: "name") else {
+                print("Nil value returned from query for the address, that's odd.")
+                return
+            }
+            guard let addressValue : String = results?.string(forColumn: "address") else {
+                print("Nil value returned from query for the address, that's odd.")
+                return
+            }
+            guard let phoneValue : String = results?.string(forColumn: "phone") else {
+                print("Nil value returned from query for the phone number, that's odd.")
+                return
+            }
+            
+            contactArray.append(Contact(name: nameValue, address: addressValue, phone: phoneValue))
+            
+            // Load the results in the view (user interface)
+            textFieldName.text = nameValue
+            textFieldAddress.text = addressValue
+            textFieldPhone.text = phoneValue
+            labelStatus.text = "Record found!"
+            
+            // Enable the next result button if there is another result
+            if results?.next() == true {
+                if results?.hasAnotherRow() == true {
+                    buttonNext.isEnabled = true
+                }
+            } else {
+                buttonNext.isEnabled = false
+                
+                // Close the database
+                if contactDB?.close() == true {
+                    print("DB closed")
+                }
+
+            }
+
+        }
+        
+        
+        print("Another row?")
+        print(results?.hasAnotherRow())
+        print("contents of next row")
+        print(results?.resultDictionary())
+    }
 }
 
