@@ -220,8 +220,7 @@ class ViewController: UIViewController {
     
     @IBAction func showNextResult(_ sender: Any) {
         contactArrayIndex += 1
-        displayPreviousResult()
-        
+        displayResult()
     }
     
     @IBAction func showPreviousResult(_ sender: UIButton) {
@@ -283,7 +282,6 @@ class ViewController: UIViewController {
             }
 
         }
-        
         
         print("Another row?")
         print(results?.hasAnotherRow())
