@@ -120,6 +120,10 @@ class ViewController: UIViewController {
                 // Try to run the statement
                 let result = contactDB.executeUpdate(SQL, withArgumentsIn: nil)
                 
+                // Clear the array with contacts as we have a new one
+                
+                contactArray = [Contact]()
+                
                 // See what happened and react accordingly
                 if !result {
                     labelStatus.text = "Failed to add contact"
