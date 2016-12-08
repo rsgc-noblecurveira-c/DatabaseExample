@@ -232,6 +232,10 @@ class ViewController: UIViewController {
             contactArrayIndex -= 1
             displayPreviousResult()
             buttonNext.isEnabled = true
+        if (contactArrayIndex < 5)
+        {
+            buttonNext.isEnabled = true
+        }
     }
     
     func displayPreviousResult() {
@@ -292,7 +296,7 @@ class ViewController: UIViewController {
             textFieldAddress.text = contactArray[contactArrayIndex].address
             textFieldPhone.text = contactArray[contactArrayIndex].phone
             labelStatus.text = "Record found!"
-            if (contactArrayIndex == contactArray.count)
+            if (contactArrayIndex == contactArray.count - 1)
             {
                 buttonNext.isEnabled = false
             }
