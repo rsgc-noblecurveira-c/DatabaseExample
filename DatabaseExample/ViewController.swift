@@ -121,7 +121,6 @@ class ViewController: UIViewController {
                 let result = contactDB.executeUpdate(SQL, withArgumentsIn: nil)
                 
                 // Clear the array with contacts as we have a new one
-                
                 contactArray = [Contact]()
                 
                 // See what happened and react accordingly
@@ -305,11 +304,5 @@ class ViewController: UIViewController {
                 buttonNext.isEnabled = false
             }
         }
-        
-        print("Another row?")
-        print(results?.hasAnotherRow())
-        print("contents of next row")
-        print(results?.resultDictionary())
     }
 }
-
