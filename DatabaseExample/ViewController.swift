@@ -181,24 +181,18 @@ class ViewController: UIViewController {
                         resetFields()
                     }
                     
-                    
                 } catch {
                     
                     // Query did not run, so report an error
                     print("Error: \(contactDB.lastErrorMessage())")
                 }
-                
             }
-            
         } else {
             
             // Database could not be opened, report an error
             print("Error: Database could not be opened.")
-            
         }
-        
     }
-    
     @IBAction func findOnPartialSearchString(_ sender: Any) {
         
         // Invoke the findContact method.
@@ -258,7 +252,7 @@ class ViewController: UIViewController {
     
     func displayResult() {
         
-        if results?.hasAnotherRow() == true {
+        if results?.hasAnotherRow() == true /*&& contactArrayIndex == contactArray.count - 1*/ {
             
             guard let nameValue : String = results?.string(forColumn: "name") else {
                 print("Nil value returned from query for the address, that's odd.")
@@ -276,10 +270,19 @@ class ViewController: UIViewController {
             contactArray.append(Contact(name: nameValue, address: addressValue, phone: phoneValue))
             
             // Load the results in the view (user interface)
-            textFieldName.text = nameValue
-            textFieldAddress.text = addressValue
-            textFieldPhone.text = phoneValue
+            
+            textFieldName.text = contactArray[contactArrayIndex].name
+            textFieldAddress.text = contactArray[contactArrayIndex].address
+            textFieldPhone.text = contactArray[contactArrayIndex].phone
             labelStatus.text = "Record found!"
+            if (contactArrayIndex == contactArray.count - 1)
+            {
+                buttonNext.isEnabled = false
+            }
+//            textFieldName.text = nameValue
+//            textFieldAddress.text = addressValue
+//            textFieldPhone.text = phoneValue
+//            labelStatus.text = "Record found!"
             
             // Enable the next result button if there is another result
             if results?.next() == true {
